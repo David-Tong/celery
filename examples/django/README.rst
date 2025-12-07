@@ -39,14 +39,14 @@ In addition, some Python requirements must also be satisfied:
 
 .. code-block:: console
 
-    $ pip install -r requirements.txt
+    $ pip --default-timeout=120 install -r requirements.txt
 
-Starting the worker
+Starting the worker (In windows use the ``--pool=solo`` option)
 ===================
 
 .. code-block:: console
 
-    $ celery -A proj worker -l INFO
+    $ celery -A proj worker -l INFO --pool=solo
 
 Running a task
 ===================
@@ -55,7 +55,8 @@ Running a task
 
     $ python ./manage.py shell
     >>> from demoapp.tasks import add, mul, xsum
-    >>> res = add.delay_on_commit(2, 3)
+    >>> res = add.delay(2, 3)
+    >>> res.id
     >>> res.get()
     5
 
